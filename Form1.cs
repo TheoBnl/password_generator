@@ -16,13 +16,13 @@ namespace password_generator
         {
             InitializeComponent();
 
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle; //block Form resizing
+            this.MaximizeBox = false; 
             this.MinimizeBox = false;
         }
 
         string password;
-        string specialChar = "@#$!"; 
+        string specialChar = "@#$!"; // <= Special char used in the password can be customized
 
         List<char> listChar = new List<char>();
 
@@ -30,20 +30,20 @@ namespace password_generator
 
         private void Form_Load(object sender, EventArgs e)
         {
-            //Nombre de valeurs possible utilisée par le trackbar
-            trackBar_nbChar.Maximum = 15;
-            trackBar_nbChar.Minimum = 5;
+            //trackBar settings, can be customized
+            trackBar_nbChar.Maximum = 15; //maximum number of char included in your password
+            trackBar_nbChar.Minimum = 5; //minimum number of char included in your password
 
             textBox_PasswordDisplay.Text = passwordGeneration();
             label_nbChar.Text = trackBar_nbChar.Value.ToString();
         }
 
-        private char randomCharGeneration()
+        private char randomCharGeneration() //function used to generate a random character
         {
             char randomChar;
             int randomNumber;
 
-            randomNumber = random.Next(0, 62 + specialChar.Length); // 26 minuscules + 26 majuscules + 9 chiffres + nombre de caractères spéciaux (4 ici)
+            randomNumber = random.Next(0, 62 + specialChar.Length); )
 
             if (randomNumber < 10)
             {
@@ -52,11 +52,11 @@ namespace password_generator
             }
             else if (randomNumber < 36)
             {
-                randomChar = (char)('A' + randomNumber - 10); // -10 pour qu'on a un nb aléatoire entre 1 et 26 pour toutes les lettres de l'alphabet 36 - 10 = 26 lettres
+                randomChar = (char)('A' + randomNumber - 10); 
             }
             else if (randomNumber < 62)
             {
-                randomChar = (char)('a' + randomNumber - 36); // même principe ici 62 - 36 = 26
+                randomChar = (char)('a' + randomNumber - 36); 
             }
             else
             {
@@ -66,7 +66,7 @@ namespace password_generator
             return randomChar;
         }
 
-        private string passwordGeneration()
+        private string passwordGeneration() //function used to generate a random password by adding the number of char wanted in a List <char>
         {
             listChar.Clear(); //vider la List avant génération
 
@@ -75,31 +75,23 @@ namespace password_generator
                 listChar.Add(randomCharGeneration());
             }
              
-            password = string.Join("", listChar); //assemblage de tout les caractères de la List
+            password = string.Join("", listChar); //concatenate all the char of the List
 
             return password;
         }
 
-        private void trackBar_nbChar_Scroll(object sender, EventArgs e) //Event pour récupérer la valeur de de la trackbar à chaque changement de valeurs
+        private void trackBar_nbChar_Scroll(object sender, EventArgs e) //Event to catch the value of the trackBar at each move
         {
             textBox_PasswordDisplay.Text = passwordGeneration();
-            label_nbChar.Text = trackBar_nbChar.Value.ToString();
-            
-            /* 
-             foreach (char c in listChar) //TEST dump de la liste dans la console
-             {
-                 Console.WriteLine(c);
-             }
-             Console.WriteLine("----------------");//TEST sépare le contenu du dump
-             */
+            label_nbChar.Text = trackBar_nbChar.Value.ToString(); 
         }
 
-        private void button_copyPassword_Click(object sender, EventArgs e)
+        private void button_copyPassword_Click(object sender, EventArgs e) //Copy into clipboard Method
         {
             System.Windows.Forms.Clipboard.SetText(textBox_PasswordDisplay.Text);
         }
 
-        private void trackBar_nbChar_MouseDown(object sender, MouseEventArgs e)
+        private void trackBar_nbChar_MouseDown(object sender, MouseEventArgs e) //Event to regenerate a password by just clicking on the trackBar cursor
         {
             if (e.Button == MouseButtons.Left)
             {
