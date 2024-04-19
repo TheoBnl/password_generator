@@ -68,7 +68,7 @@ namespace password_generator
 
         private string passwordGeneration() //function used to generate a random password by adding the number of char wanted in a List <char>
         {
-            listChar.Clear(); //vider la List avant génération
+            listChar.Clear(); //Clear the List before generating
 
             for (int i = 0; i < trackBar_nbChar.Value; i++)
             {
